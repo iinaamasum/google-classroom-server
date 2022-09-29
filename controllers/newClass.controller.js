@@ -3,6 +3,7 @@ const {
   postNewClassService,
   getAllClassService,
   deleteClassByIdService,
+  getClassByIdService,
 } = require('../services/newClass.service');
 
 exports.postNewClass = async (req, res, next) => {
@@ -54,6 +55,30 @@ exports.getAllClass = async (req, res, next) => {
   }
 };
 
+exports.getClassById = async (req, res) => {
+  try {
+    const result = await getClassByIdService(req.params.id);
+    if (!result) {
+      return res.status(400).json({
+        status: 'failed',
+        message: "can't get the class with the given id. class does not exist.",
+        result,
+      });
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'got the class with the given id. @param object',
+      result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'failed',
+      message: "don't get the class. Something is wrong.",
+      error,
+    });
+  }
+};
+
 exports.deleteClassById = async (req, res, next) => {
   try {
     const result = await deleteClassByIdService(req.params.id);
@@ -66,7 +91,7 @@ exports.deleteClassById = async (req, res, next) => {
     }
     res.status(200).json({
       status: 'success',
-      message: 'got all class. @param Array of objects.',
+      message: 'delete the class. @param object.',
       result,
     });
   } catch (error) {

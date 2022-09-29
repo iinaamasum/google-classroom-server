@@ -15,7 +15,20 @@ exports.getAllClassService = async (query) => {
   return result;
 };
 
+exports.getClassByIdService = async (classId) => {
+  const result = await NewClassModel.findById(classId);
+  return result;
+};
+
 exports.deleteClassByIdService = async (classId) => {
+  const isExistClass = await this.getClassByIdService(classId);
+  console.log(isExistClass);
+  if (!isExistClass?._id) {
+    return {
+      deletedCount: 0,
+      message: 'class not found with the id. nothing to delete.',
+    };
+  }
   const result = await NewClassModel.deleteOne({ _id: classId });
   return result;
 };
