@@ -22,7 +22,6 @@ exports.getClassByIdService = async (classId) => {
 
 exports.deleteClassByIdService = async (classId) => {
   const isExistClass = await this.getClassByIdService(classId);
-  console.log(isExistClass);
   if (!isExistClass?._id) {
     return {
       deletedCount: 0,
@@ -30,5 +29,20 @@ exports.deleteClassByIdService = async (classId) => {
     };
   }
   const result = await NewClassModel.deleteOne({ _id: classId });
+  return result;
+};
+
+exports.patchClassByIdService = async (classId, updateDoc) => {
+  const isExistClass = await this.getClassByIdService(classId);
+  if (!isExistClass?._id) {
+    return {
+      modifiedCount: 0,
+      message: 'class not found with the id. nothing to delete.',
+    };
+  }
+  const result = await NewClassModel.updateOne(
+    { _id: classId },
+    { $set: updateDoc }
+  );
   return result;
 };

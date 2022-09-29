@@ -4,7 +4,9 @@ const {
   getAllClassService,
   deleteClassByIdService,
   getClassByIdService,
+  patchClassByIdService,
 } = require('../services/newClass.service');
+const { validJSONCheck } = require('../utils/jsonCheck.middleware');
 
 exports.postNewClass = async (req, res, next) => {
   try {
@@ -98,6 +100,30 @@ exports.deleteClassById = async (req, res, next) => {
     res.status(400).json({
       status: 'failed',
       message: "Can't delete the class. Something went wrong.",
+      error,
+    });
+  }
+};
+
+exports.patchClassById = async (req, res, next) => {
+  try {
+    const result = await patchClassByIdService(req.params.id, req.body);
+    if (!result.modifiedCount) {
+      res.status(400).json({
+        status: 'failed',
+        message: "Can't update the class.",
+        result,
+      });
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'Class is updated with the given data. @param object.',
+      result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'failed',
+      message: "Can't update the class. Something went wrong.",
       error,
     });
   }
