@@ -11,6 +11,11 @@ const newClassSchema = new mongoose.Schema(
       maxLength: [100, 'Class title can be max of 100 chars.'],
       unique: [true, 'class title should be unique.'],
     },
+    email: {
+      type: String,
+      required: [true, 'email is not provided.'],
+      trim: true,
+    },
     section: {
       type: String,
       required: [true, 'section is required.'],

@@ -7,6 +7,15 @@ exports.postNewClassService = async (data) => {
 };
 
 exports.getAllClassService = async (query) => {
-  const result = await NewClassModel.find(query);
+  const result = await NewClassModel.find(query).sort({
+    createdAt: -1,
+    roomNumber: 1,
+    classTitle: 1,
+  });
+  return result;
+};
+
+exports.deleteClassByIdService = async (classId) => {
+  const result = await NewClassModel.deleteOne({ _id: classId });
   return result;
 };

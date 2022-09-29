@@ -2,6 +2,7 @@ const NewClassModel = require('../models/newClass.model');
 const {
   postNewClassService,
   getAllClassService,
+  deleteClassByIdService,
 } = require('../services/newClass.service');
 
 exports.postNewClass = async (req, res, next) => {
@@ -48,7 +49,31 @@ exports.getAllClass = async (req, res, next) => {
     res.status(400).json({
       status: 'failed',
       message: "Can't get all class. Something went wrong.",
+      error,
+    });
+  }
+};
+
+exports.deleteClassById = async (req, res, next) => {
+  try {
+    const result = await deleteClassByIdService(req.params.id);
+    if (!result.deletedCount) {
+      res.status(400).json({
+        status: 'failed',
+        message: "Can't delete the class.",
+        result,
+      });
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'got all class. @param Array of objects.',
       result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'failed',
+      message: "Can't delete the class. Something went wrong.",
+      error,
     });
   }
 };
