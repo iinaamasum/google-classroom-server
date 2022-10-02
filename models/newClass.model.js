@@ -9,7 +9,6 @@ const newClassSchema = new mongoose.Schema(
       required: [true, 'Class title is required.'],
       minLength: [2, 'Class title should be more than 1 chars.'],
       maxLength: [100, 'Class title can be max of 100 chars.'],
-      unique: [true, 'class title should be unique.'],
     },
     email: {
       type: String,
@@ -30,6 +29,10 @@ const newClassSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Room number is required.'],
       trim: true,
+    },
+    imgURL: {
+      type: String,
+      required: [true, 'Banner Image URL not provided.'],
     },
   },
   {

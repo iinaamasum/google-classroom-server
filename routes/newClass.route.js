@@ -8,10 +8,10 @@ const {
 
 const router = require('express').Router();
 
-router.route('/class').post(postNewClass).get(getAllClass);
+router.route('/').post(postNewClass).get(getAllClass);
 
 router
-  .route('/class/:id')
+  .route('/:id')
   .delete(deleteClassById)
   .get(getClassById)
   .patch(patchClassById);

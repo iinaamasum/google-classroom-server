@@ -8,12 +8,11 @@ const {
 } = require('../services/newClass.service');
 const { validJSONCheck } = require('../utils/jsonCheck.middleware');
 
-exports.postNewClass = async (req, res, next) => {
+exports.postNewClass = async (req, res) => {
   try {
     const result = await postNewClassService(req.body);
-    console.log(result);
     if (!result) {
-      res.status(400).json({
+      return res.status(400).json({
         status: 'failed',
         message: "Can't Post the given class.",
         result,
@@ -33,11 +32,11 @@ exports.postNewClass = async (req, res, next) => {
   }
 };
 
-exports.getAllClass = async (req, res, next) => {
+exports.getAllClass = async (req, res) => {
   try {
     const result = await getAllClassService(req.body);
     if (result.length === 0) {
-      res.status(400).json({
+      return res.status(400).json({
         status: 'failed',
         message: "Can't get all class.",
         result,
@@ -81,11 +80,11 @@ exports.getClassById = async (req, res) => {
   }
 };
 
-exports.deleteClassById = async (req, res, next) => {
+exports.deleteClassById = async (req, res) => {
   try {
     const result = await deleteClassByIdService(req.params.id);
     if (!result.deletedCount) {
-      res.status(400).json({
+      return res.status(400).json({
         status: 'failed',
         message: "Can't delete the class.",
         result,
@@ -105,11 +104,11 @@ exports.deleteClassById = async (req, res, next) => {
   }
 };
 
-exports.patchClassById = async (req, res, next) => {
+exports.patchClassById = async (req, res) => {
   try {
     const result = await patchClassByIdService(req.params.id, req.body);
     if (!result.modifiedCount) {
-      res.status(400).json({
+      return res.status(400).json({
         status: 'failed',
         message: "Can't update the class.",
         result,
