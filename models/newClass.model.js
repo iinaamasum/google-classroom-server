@@ -9,6 +9,7 @@ const newClassSchema = new mongoose.Schema(
       required: [true, 'Class title is required.'],
       minLength: [2, 'Class title should be more than 1 chars.'],
       maxLength: [100, 'Class title can be max of 100 chars.'],
+      unique: false,
     },
     email: {
       type: String,
@@ -33,6 +34,11 @@ const newClassSchema = new mongoose.Schema(
     imgURL: {
       type: String,
       required: [true, 'Banner Image URL not provided.'],
+    },
+    usersSubscribe: [String],
+    classWorkInfo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Class-Work',
     },
   },
   {

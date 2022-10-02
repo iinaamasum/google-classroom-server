@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const NewClassModel = require('../models/newClass.model');
 const {
   postNewClassService,
@@ -34,7 +35,7 @@ exports.postNewClass = async (req, res) => {
 
 exports.getAllClass = async (req, res) => {
   try {
-    const result = await getAllClassService(req.body);
+    const result = await getAllClassService(req.query);
     if (result.length === 0) {
       return res.status(400).json({
         status: 'failed',
@@ -106,7 +107,8 @@ exports.deleteClassById = async (req, res) => {
 
 exports.patchClassById = async (req, res) => {
   try {
-    const result = await patchClassByIdService(req.params.id, req.body);
+    const mongoObjectId = ObjectId(req.params.id);
+    const result = await patchClassByIdService(mongoObjectId, req.body);
     if (!result.modifiedCount) {
       return res.status(400).json({
         status: 'failed',
