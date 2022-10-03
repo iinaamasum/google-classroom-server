@@ -119,10 +119,10 @@ exports.deleteClassWorkByIdWithFile = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await ClassWorkModel.findById(id);
-    console.log('result', result);
+    // console.log('result', result);
     if (!!result.path) {
       const deletedClassWork = await ClassWorkModel.deleteOne({ _id: id });
-      console.log('deletedwork', deletedClassWork);
+      // console.log('deletedwork', deletedClassWork);
       const deletedFile = fs.unlinkSync(result.path);
       if (!deletedClassWork.deletedCount) {
         return res.status(200).json({
@@ -138,7 +138,7 @@ exports.deleteClassWorkByIdWithFile = async (req, res) => {
       });
     }
     const deletedClassWork = await ClassWorkModel.deleteOne({ _id: id });
-    console.log('deletedwork without file', deletedClassWork);
+    // console.log('deletedwork without file', deletedClassWork);
     if (!deletedClassWork.deletedCount) {
       return res.status(200).json({
         status: 'failed',
