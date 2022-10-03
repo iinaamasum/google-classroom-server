@@ -26,10 +26,7 @@ const classWorkSchema = new mongoose.Schema(
       type: ObjectId,
       ref: 'NewClassModel',
     },
-    path: {
-      type: String,
-      required: [true, 'File path is required'],
-    },
+    path: String,
   },
   {
     timestamps: true,
