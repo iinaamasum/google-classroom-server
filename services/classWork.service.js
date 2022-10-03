@@ -10,3 +10,8 @@ exports.getAllClassWorkService = async (data) => {
   const result = await ClassWorkModel.find(data).sort({ createdAt: -1 });
   return result;
 };
+
+exports.getClassWorkByIdService = async (workId) => {
+  const result = await ClassWorkModel.findById({ _id: workId });
+  return result;
+};
