@@ -42,7 +42,8 @@ exports.patchClassByIdService = async (classId, updateDoc) => {
   }
   const result = await NewClassModel.updateOne(
     { _id: classId },
-    { $set: updateDoc }
+    { $set: updateDoc },
+    { runValidators: true }
   );
   return result;
 };

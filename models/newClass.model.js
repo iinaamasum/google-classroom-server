@@ -36,10 +36,6 @@ const newClassSchema = new mongoose.Schema(
       required: [true, 'Banner Image URL not provided.'],
     },
     usersSubscribe: [String],
-    classWorkInfo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Class-Work',
-    },
   },
   {
     timestamps: true,

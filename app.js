@@ -12,9 +12,9 @@ app.use(express.json());
 app.use(morgan('tiny'));
 
 // route
+app.use('/api/v1/class-work', classWorkRouter);
 app.use('/api/v1/class', newClassRouter);
 app.use('/api/v1/user-info', userInfoRoute);
-app.use('/api/v1/class-work', classWorkRouter);
 
 // root route
 app.all('/', (req, res, next) => {

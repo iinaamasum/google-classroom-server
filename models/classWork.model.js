@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 
 const classWorkSchema = new mongoose.Schema({
@@ -19,6 +20,15 @@ const classWorkSchema = new mongoose.Schema({
       message: String,
     },
   ],
+  workFileName: String,
+  classId: {
+    type: ObjectId,
+    ref: 'NewClassModel',
+  },
+  path: {
+    type: String,
+    required: [true, 'File path is required'],
+  },
 });
 
 const ClassWorkModel = mongoose.model('Class-Work', classWorkSchema);
