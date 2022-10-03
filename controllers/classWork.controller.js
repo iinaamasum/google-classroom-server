@@ -1,3 +1,4 @@
+const fs = require('fs');
 const ClassWorkModel = require('../models/classWork.model');
 const {
   postClassWorkService,
@@ -99,6 +100,61 @@ exports.getClassWorkById = async (req, res) => {
     res.status(400).json({
       status: 'failed',
       message: "Can't get class work by id. Internal error.",
+      error,
+    });
+  }
+};
+
+exports.getRequestedFile = async (req, res) => {
+  const { fileName } = req.params;
+  const path = 'files/' + fileName;
+  console.log(path);
+
+  res.download(path, (error) => {
+    console.log(error);
+  });
+};
+
+exports.deleteClassWorkByIdWithFile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await ClassWorkModel.findById(id);
+    console.log('result', result);
+    if (!!result.path) {
+      const deletedClassWork = await ClassWorkModel.deleteOne({ _id: id });
+      console.log('deletedwork', deletedClassWork);
+      const deletedFile = fs.unlinkSync(result.path);
+      if (!deletedClassWork.deletedCount) {
+        return res.status(200).json({
+          status: 'failed',
+          message: "Can't delete the work.",
+          result: deletedClassWork,
+        });
+      }
+      return res.status(200).json({
+        status: 'success',
+        message: 'delete the work. @param object.',
+        result: deletedClassWork,
+      });
+    }
+    const deletedClassWork = await ClassWorkModel.deleteOne({ _id: id });
+    console.log('deletedwork without file', deletedClassWork);
+    if (!deletedClassWork.deletedCount) {
+      return res.status(200).json({
+        status: 'failed',
+        message: "Can't delete the work.",
+        result: deletedClassWork,
+      });
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'delete the work. @param object.',
+      result: deletedClassWork,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: 'failed',
+      message: "Can't delete the work.",
       error,
     });
   }

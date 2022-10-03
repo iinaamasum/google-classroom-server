@@ -1,4 +1,5 @@
 const ClassWorkModel = require('../models/classWork.model');
+const fs = require('fs');
 
 exports.postClassWorkService = async (data) => {
   const postData = new ClassWorkModel(data);
