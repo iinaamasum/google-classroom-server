@@ -7,6 +7,6 @@ exports.postClassWorkService = async (data) => {
 };
 
 exports.getAllClassWorkService = async (data) => {
-  const result = await ClassWorkModel.find(data).sort({ createdAt: -1 });
+  const result = await ClassWorkModel.find(data);
   return result;
 };

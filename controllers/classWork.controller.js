@@ -56,8 +56,8 @@ exports.postClassWork = async (req, res) => {
 exports.getAllClassWork = async (req, res) => {
   try {
     const result = await getAllClassWorkService(req.query);
-    if (result?.length === 0) {
-      return res.status(400).json({
+    if (!result.length) {
+      return res.status(200).json({
         status: 'failed',
         message: 'No class found.',
         result,
